@@ -1,0 +1,95 @@
+ 1 . student .php
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+
+<h2>Enter Student Details</h2>
+
+<form action="marks.php" method="post">
+    Roll No: <input type="text" name="rno" required><br><br>
+    Name: <input type="text" name="name" required><br><br>
+    Class: <input type="text" name="class" required><br><br>
+
+    <input type="submit" value="Next">
+</form>
+
+</body>
+</html>
+
+
+2.marks.php
+
+<html>
+<head>
+    <title>Enter Marks</title>
+</head>
+<body>
+
+<h2>Enter Marks (Out of 100)</h2>
+
+<form action="result.php" method="post">
+
+    <!-- Passing student details -->
+    <input type="hidden" name="rno" value="<?php echo $_POST['rno']; ?>">
+    <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
+    <input type="hidden" name="class" value="<?php echo $_POST['class']; ?>">
+
+    Subject 1: <input type="number" name="m1" max="100" required><br><br>
+    Subject 2: <input type="number" name="m2" max="100" required><br><br>
+    Subject 3: <input type="number" name="m3" max="100" required><br><br>
+    Subject 4: <input type="number" name="m4" max="100" required><br><br>
+    Subject 5: <input type="number" name="m5" max="100" required><br><br>
+    Subject 6: <input type="number" name="m6" max="100" required><br><br>
+
+    <input type="submit" value="Show Result">
+</form>
+
+</body>
+</html>
+
+3.result.php
+
+<html>
+<head>
+    <title>Marklist</title>
+</head>
+<body>
+
+<h2>Student Marklist</h2>
+
+<?php
+$rno = $_POST['rno'];
+$name = $_POST['name'];
+$class = $_POST['class'];
+
+$m1 = $_POST['m1'];
+$m2 = $_POST['m2'];
+$m3 = $_POST['m3'];
+$m4 = $_POST['m4'];
+$m5 = $_POST['m5'];
+$m6 = $_POST['m6'];
+
+$total = $m1 + $m2 + $m3 + $m4 + $m5 + $m6;
+$percentage = $total / 6;
+
+// Display result
+echo "Roll No: $rno <br>";
+echo "Name: $name <br>";
+echo "Class: $class <br><br>";
+
+echo "Marks:<br>";
+echo "Subject 1: $m1 <br>";
+echo "Subject 2: $m2 <br>";
+echo "Subject 3: $m3 <br>";
+echo "Subject 4: $m4 <br>";
+echo "Subject 5: $m5 <br>";
+echo "Subject 6: $m6 <br><br>";
+
+echo "<b>Total Marks: $total</b><br>";
+echo "<b>Percentage: $percentage %</b>";
+?>
+
+</body>
+</html>

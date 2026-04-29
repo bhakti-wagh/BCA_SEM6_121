@@ -1,0 +1,66 @@
+Write a PHP file that can be added to other PHP files usin
+the include or require functions. This file should: 
+a.	Make a connection to a MySQL database, and log in with valid credentials. The connection resource should b stored in a variable with an appropriate name. 
+b.	Create a database TEST if it does not exist. 
+c.	Select the TEST database. 
+d.	Create a table USER exerciseusers if it does not 
+exist with the following field 
+i. USERNAME 
+VARCHAR(100) , 
+PASSWORD_HASH 
+CHAR(40), PHONE 
+VARCHAR(10) 
+e.	The USERNAME field should be designated as 
+UNIQUE. 
+f.	If any of these operations cause an error, stopexecution and print the error message 
+ 
+ 
+ <?php
+// Database credentials
+$host = "localhost";
+$user = "root";
+$pass = "";
+
+// a) Create connection
+$conn = new mysqli($host, $user, $pass);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection Failed: " . $conn->connect_error);
+}
+
+// b) Create database TEST if not exists
+$sql = "CREATE DATABASE IF NOT EXISTS TEST";
+if (!$conn->query($sql)) {
+    die("Error creating database: " . $conn->error);
+}
+
+// c) Select database TEST
+if (!$conn->select_db("TEST")) {
+    die("Error selecting database: " . $conn->error);
+}
+
+// d) Create table exerciseusers if not exists
+$sql = "CREATE TABLE IF NOT EXISTS exerciseusers (
+    USERNAME VARCHAR(100) UNIQUE,
+    PASSWORD_HASH CHAR(40),
+    PHONE VARCHAR(10)
+)";
+
+if (!$conn->query($sql)) {
+    die("Error creating table: " . $conn->error);
+}
+
+// If everything is successful
+// echo "Database and table ready!";
+?>
+
+
+
+//how to use in other files
+<?php
+require("db_config.php");
+
+// Now you can use $conn for queries
+$result = $conn->query("SELECT * FROM exerciseusers");
+?>
